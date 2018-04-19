@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# #############################################################################
+# A Very Simple SSH Manager
+#
+# @author	Dilip Raj Baral <dilip@diliprajbaral.com>
+#
+# Usage:	ssh-save [server-identifier] [password]
+# 
+# Example:	ssh-save admin@diliprajbaral.com A!Q9%6T$m@
+# #############################################################################
+
+if [ $# -lt 2 ]
+  then
+    echo "Syntax error: Invalid number of arguments passed."
+    echo
+    echo "Usage:"
+    echo "   ssh-save [server-identifier] [password]"
+    exit 1
+fi
+
+server_id=$1
+password=$2
+
+script_dir="$(dirname "$0")"
+pwd_dir="$script_dir/.ssh_pwd"
+pwd_file=$pwd_dir/$server_id
+
+if [ ! -d "$pwd_dir" ]; then
+	mkdir -p $pwd_dir
+fi
+
+echo $password > $pwd_file

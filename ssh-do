@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# #############################################################################
+# A Very Simple SSH Manager
+#
+# @author	Dilip Raj Baral <dilip@diliprajbaral.com>
+#
+# Usage:	ssh-do [server-identifier] [password]
+#
+# Example:	ssh-save admin@diliprajbaral.com
+# #############################################################################
+
+server_id=$1
+
+if [ -z "$server_id" ]; then
+	echo "Syntax error: No argument passed."
+	echo
+	echo "Usage:"
+	echo "   ssh-do [server-identifier]"
+	exit 1
+fi
+
+script_dir="$(dirname "$0")"
+pwd_dir="$script_dir/.ssh_pwd"
+pwd_file=$pwd_dir/$server_id
+
+if [ ! -f "$pwd_file" ]; then
+	echo "WARN: Server entry not found. Please add an entry."
+	echo "     Eg. ssh-save [server-identifier] [password]"
+	exit 1
+fi
+
+# Copy the password to the clipboard. User will need to paste the password.
+
+if [ "$(uname)" == "Darwin" ]; then
+    # MacOS
+    pbcopy < $pwd_file
+    echo "Password copied to the clipboard. Press Cmd + V to login."
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    # GNU/Linux
+    if hash xclip 2>/dev/null; then
+    	xclip < $pwd_file
+    	echo "Password copied to the clipboard. Press Ctrl + V to login."
+    else
+    	echo "ERROR: Please install xclip."
+    	exit 0
+    fi
+else
+	echo "This OS is not supported. If you think it should be supported, create an issue here:"
+	echo "    https://github.com/rajbdilip/a-very-simple-ssh-manager/issues"
+	exit 1
+fi
+
+
+ssh $server
