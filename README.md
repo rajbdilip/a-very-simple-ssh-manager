@@ -1,10 +1,18 @@
 # A Very Simple SSH Manager
 
-## Setup
+## Installation
+
+#### Using Homebrew
+
+```shell
+$ brew install https://raw.githubusercontent.com/rajbdilip/a-very-simple-ssh-manager/master/HomebrewFormula/a-very-simple-ssh-manager.rb
+```
+
+#### Manual Installation
 
 1. Clone this repo or download a ZIP.
 
-2. Copy the scripts *ssh-save* and *ssh-do* to */usr/local/bin*. If you don't have access to this path, copy the scripts to any location you like and add the path to *PATH* environment variable.
+2. Copy the scripts *ssh-save* and *ssh-do* to one of `PATH` directories i.e. */usr/local/bin*. If you don't have access to these paths, copy the scripts to any location you like and add the path to *PATH* environment variable.
 
    Eg. If you copy the scripts to */Users/rajbdilip/myscripts* directory, you'd add the following line to *~/.bashrc* of *~/.bash_profile*.
 
